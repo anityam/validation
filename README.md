@@ -40,10 +40,24 @@ k8_declarations/istio/wrong.yaml - VirtualService bookinfo is invalid: problem v
 ```
 
 ## kubectl validate
+Installing kubectl validate with a go installer 
+```bash
+go install sigs.k8s.io/kubectl-validate@latest
+```
+After installation the kubectl should have a validate command
+```bash
+kubectl validate ./k8_declarations/istio/right.yaml --local-crds ./crd_definition 
 
+./k8_declarations/istio/right.yaml...OK
+```
 
+and with the wrong template 
+```bash
+kubectl validate ./k8_declarations/istio/wrong.yaml --local-crds ./crd_definition
 
-
+./k8_declarations/istio/wrong.yaml...ERROR
+spec.http[0].match[2].exact: Invalid value: value provided for unknown field
+```
 
 
 # Reading
