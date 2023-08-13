@@ -9,7 +9,15 @@ To begin with we need to validate the structure of the template that we are feed
 
 ### Tool for crd template validate
 ### Requirement 
-The crd definition will be needed to validate our declaration against it. For example [istio operators crd](https://github.com/istio/istio/tree/483f3466eca1de70164dd3af33fb411d9e311c23/manifests/charts/base/crds). For a good list of maintained crd's go to [datreeio crd repo](https://github.com/datreeio/CRDs-catalog). We will use istio and flux from this repo 
+The crd definition will be needed to validate our declaration against it. For example [istio operators crd](https://github.com/istio/istio/tree/483f3466eca1de70164dd3af33fb411d9e311c23/manifests/charts/base/crds). For a good list of maintained crd's go to [datreeio crd repo](https://github.com/datreeio/CRDs-catalog). We will use istio and flux from this repo. Kubectl validate requires the schemas storage location to be in `apis/group/version.json`. The other way is to grab all crds from the cluster itself and store it locally and use them.
+
+#### Install CRDS for kubectl validate
+We will install a kind cluster to bring up a k8 cluster
+`kind create cluster --config cluster/config.yaml`
+
+Installing the CRD's for flux and istio to test the validation for kubectl validation
+
+For flux we will need to bootstrap the flux to the cluster. The more detail work on flux setup can be looked up at [flux_learn](https://github.com/anityam/flux_learn). Istio can be setup through istioctl more detail on that in [istio](https://github.com/anityam/istio).Once the crds are in the cluster we can get the available crds through `kubectl get crds`. Learn the script [crds.sh](./scripts/crds.sh) to get all the crds from the cluster.
 
 ## Kubeval
 [kubeval](https://github.com/instrumenta/kubeval) is not currently maintained but paved the way for kubeconform
